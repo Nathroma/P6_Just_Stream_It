@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>JustStreamIt</title>
+        <script src="js/script.js"></script>
+    </head>
+
+    <body>
+        <header>
+          <h1><a href="index.html">JustStreamIt</a></h1>
+
+          <nav>
+            <ul id="menu">
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="#sliders">Catégories</a></li>
+            </ul>
+          </nav>
+          
+        </header>
+    
+        <div class=container>
+          
+            <div id="best-movie">
+              <img src="images/Cite_de_la_peur_full.jpg" alt="jacket best movie">
+              <h2 id="best-title">Cité de la peur</h2>
+              <a onclick=openModal() id="detail-button">En savoir plus</a>
+              <p id="best-desc">1994</p>
+              
+            </div>
+
+            <div id="sliders">
+                <a href="#sliders" class="arrow down">&#8249;</a>
+  
+                <h3>Top des meilleurs films</h3>
+                <div id="best" class="movies slider">
+                  <div class="arrow left" onclick="moveRight('best')">&#8249;</div>
+                  <div class="arrow right" onclick="moveLeft('best')">&#8250;</div>
+  
+                  <div class="slidercontent">
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                    <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+  
+                  </div>
+                </div>
+
+            <h3>Films comédie</h3>
+              <div id="comedy" class="movies slider">
+                <div class="arrow left" onclick="moveRight('comedy')">&#8249;</div>
+                <div class="arrow right" onclick="moveLeft('comedy')">&#8250;</div>
+
+                <div class="slidercontent">
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                </div>
+              </div>
+
+            <h3>Films d'horreur</h3>
+              <div id="horror" class="movies slider">
+                <div class="arrow left" onclick="moveRight('horror')">&#8249;</div>
+                <div class="arrow right" onclick="moveLeft('horror')">&#8250;</div>
+    
+                <div class="slidercontent">
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                </div>
+              </div>
+    
+            <h3>Films de science-fiction</h3>
+              <div id="sci-fi" class="movies slider">
+                <div class="arrow left" onclick="moveRight('sci-fi')">&#8249;</div>
+                <div class="arrow right" onclick="moveLeft('sci-fi')">&#8250;</div>
+    
+                <div class="slidercontent">
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                  <div class="movie"><img src="images/Cite_de_la_peur.jpg" alt="movie jacket" onclick=""></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="modalBox" class="modal">
+              <div class="modal-box">
+                <span class="close">&times;</span>
+                <div class="modal-body">
+  
+                  <img id="modal-image" src="images/Cite_de_la_peur_full.jpg" alt="">
+                  <h2 id="movie-title">La Cité de la peur</h2>
+                  <p><span id="imdb">null</span> - <span id="date">1994</span></p>
+                  <p id="desc">null</p>
+                
+                  <div id="secondary">
+                    <p>Genres: <span class="s-cont">Comique</span></p>
+                    <p>Rated: <span class="s-cont">Null</span></p>
+                    <p>Réalisateur: <span class="s-cont">Null</span></p>
+                    <p>Acteurs: <span class="s-cont">Null</span></p>
+                    <p>Origine: <span class="s-cont">Null</span></p>
+                    <p>Box Office: <span class="s-cont">Null</span></p>
+                  </div>
+                </div>
+  
+                
+              </div>
+            </div>
+
+    </body>
+</html>
