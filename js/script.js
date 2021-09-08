@@ -1,223 +1,134 @@
-getDataByCat('comedy')
-getDataByCat('action')
-getDataByCat('sci-fi')
-getDataByBest()
+var api_url =  "http://localhost:8000/api/v1/titles/"
 
 
-var modal = document.getElementById("modalBox");
-var span = document.getElementsByClassName("close")[0];
-let body = document.getElementsByTagName('body')[0]
-
-/* Faire apparaitre la modal Box */ 
-
-function showModal(movieid) {
-    
-    /* Se connecte a l'API avec l'url et recupere les infos grace à la fonction GET */
-
-    let url = "http://localhost:8000/api/v1/titles/" + movieid;
-    $.get(url).done(getFilmInfos);
-    modal.style.display = "block";
-    document.getElementsByClassName('container')[0].style.filter = 'blur(5px)';
-    body.style.overflowY = 'hidden';
-};
-
-span.onclick = function () {
-    modal.style.display = "none";
-    body.style.overflowY = 'visible';
-    document.getElementsByClassName('container')[0].style.filter = 'none'
-};
-
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        body.style.overflowY = 'visible';
-        document.getElementsByClassName('container')[0].style.filter = 'none'
-
-
-  }
-};
-
-let getFilmInfos = function(data) {
-
-    /* Enregistre toutes les infos dans une variable */
-
-    let title = document.getElementById('movie-title');
-    let desc = document.getElementById('desc');
-    let imdb = document.getElementById('imdb');
-    let date = document.getElementById('date');
-    let sec = document.getElementsByClassName('section');
-    let image = document.getElementById('modal-image');
-
-    /* Affcihe les infos recuperés sur l'API */
-
-    title.innerHTML = data.title  + " - " + data.duration + "min";
-    desc.innerHTML = data.description;
-    date.innerHTML = data.year;
-    imdb.innerHTML = "Imdb: " + data.imdb_score;
-    sec[0].innerHTML = data.genres;
-    sec[1].innerHTML = data.rated;
-    sec[2].innerHTML = data.metascore + "/100";
-    sec[3].innerHTML = data.directors;
-    sec[4].innerHTML = data.actors;
-    sec[5].innerHTML = data.countries;
-    sec[6].innerHTML = data.worldwide_gross_income + " entrés";
-    image.src = data.image_url;
-};
-
-
-function getDataByBest() {
-    let resultsp1;
-    let resultsp2;
-    let results;
-    let url_page1 = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
-    let url_page2 = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2';
-
-    $.get(url_page1).done(
-        function(data) {
-            resultsp1 = data.results;
-
-            $.get(url_page2).done(
-                function(data) {
-                    resultsp2 = data.results;
-                
-                    results = resultsp1.concat(resultsp2);
-        
-                    changeContentForBest(results)
-                }
-            );
-        }
-    );
-
+function getFilmInfo(id, pre) {
+    fetch(api_url + id)
+        .then(response => response.json())
+        .then(json => {
+            document.getElementById(pre + '__title').innerHTML = json.title;
+            document.getElementById(pre + '__img').setAttribute('src',json.image_url);
+            document.getElementById(pre + '__description').innerHTML = json.long_description;
+            if (pre == "number-one"){
+                document.getElementById(pre + '-show').id = json.id;
+            }
+            if (pre == "modal"){
+                document.getElementById(pre + '__genres').innerHTML = json.genres;
+                document.getElementById(pre + '__date_published').innerHTML = json.date_published;
+                document.getElementById(pre + '__rated').innerHTML = json.rated;
+                document.getElementById(pre + '__imdb_score').innerHTML = json.imdb_score;
+                document.getElementById(pre + '__directors').innerHTML = json.directors;
+                document.getElementById(pre + '__actors').innerHTML = json.actors;
+                document.getElementById(pre + '__duration').innerHTML = json.duration;
+                document.getElementById(pre + '__countries').innerHTML = json.countries;
+                document.getElementById(pre + '__reviews_from_critics').innerHTML = json.reviews_from_critics;
+            }
+        })
 }
 
-function changeContentForBest(data) {
-
-    let best = document.getElementById('best-movie');
-    let button = document.getElementById('best-button');
-    let bestdesc = document.getElementById('best-desc');
-    let besttitle = document.getElementById('best-title')
-
-    let bestimg = best.getElementsByTagName('img')[0];
-    bestimg.src = data[0].image_url;
-    bestimg.alt = data[0].title;
-    button.setAttribute('onclick','showModal(' + data[0].id + ')');
-    besttitle.innerHTML = data[0].title
-
-
-    $.get('http://localhost:8000/api/v1/titles/' + data[0].id).done(
-        function(data) {
-            bestdesc.innerHTML = data.long_description
+function filmTop(top, url, category, slice_start, slice_end, films = []) {
+    fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            for (film of json.results){
+                films.push([film.id, film.image_url])
+            }
+            if (top - 5 > 0){
+                filmTop(top - 5, json.next, category, slice_start, slice_end, films);
+                return []
+            }
+            return films;
         })
-    
+        .then(films => {
+            if (films.length > 0){
+                let all_img_HTML = "";
+                for (film of films.slice(slice_start, slice_end)) {
+                    var img = document.createElement("img");
+                    img.id = film[0];
+                    img.src = film[1];
+                    img.className = "carousel__img";
 
+                    var link = document.createElement("a");
+                    link.href="#";
+                    link.appendChild(img);
 
-    let slider = document.getElementById('best');
-    let sliders = slider.getElementsByClassName('movie_item');
+                    var carousel = document.getElementById(category + "__carousel");
+                    carousel.appendChild(link);
 
-    for (let i = 0; i < sliders.length; i++) {
-
-        let img = sliders[i].getElementsByTagName('img')[0];
-        img.src = data[i+1].image_url;
-        img.alt = data[i+1].title;
-        img.setAttribute('onclick','showModal(' + data[i+1].id +')' )
-
-      };
-
-    
-      
-};
-
-
-function getDataByCat(genre) {
-
-    let resultsp1;
-    let resultsp2;
-    let results;
-    let url_page1 = 'http://localhost:8000/api/v1/titles/?genre=' + genre + '&sort_by=-imdb_score';
-    let url_page2 = 'http://localhost:8000/api/v1/titles/?genre=' + genre + '&sort_by=-imdb_score&page=2';
-
-    $.get(url_page1).done(
-        function(data) {
-            resultsp1 = data.results;
-
-            $.get(url_page2).done(
-                function(data) {
-                    resultsp2 = data.results;
-                
-                    results = resultsp1.concat(resultsp2);
-        
-                    getCatInfo(genre, results)
+                    if (carousel.childNodes.length >= 6) {
+                        link.style.display = "none"
+                    }
                 }
-            );
-        }
-    );
-};
+                if (category == "top-film"){
+                    getFilmInfo(films[0][0], 'number-one');
+                }
+                // When the user clicks on the image, open the modal
+                for (var i = 0; i < document.getElementsByClassName("carousel__img").length; i++){
+                    document.getElementsByClassName("carousel__img")[i].onclick = function() {
+                        modal.style.display = "block";
+                        document.getElementsByClassName('container')[0].style.filter = 'blur(10px)';
+                        getFilmInfo(this.id, 'modal')
+                    }
+                }
+
+            }
+        })
+}
+
+var topButton = document.getElementById("number-one-show");
+topButton.onclick = function() {
+    modal.style.display = "block";
+    document.getElementsByClassName('container')[0].style.filter = 'blur(10px)';
+    getFilmInfo(this.id, 'modal')
+}
 
 
-function getCatInfo(genre, data) {
+// Get the modal
+var modal = document.getElementById("myModal");
 
-    let slider = document.getElementById(genre);
-    let sliders = slider.getElementsByClassName('movie_item');
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("modal-content__close")[0];
 
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+  document.getElementsByClassName('container')[0].style.filter = 'none'
+}
 
-    for (let i = 0; i < sliders.length; i++) {
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    document.getElementsByClassName('container')[0].style.filter = 'none'
+  }
+}
 
-        let img = sliders[i].getElementsByTagName('img')[0];
-        img.src = data[i].image_url;
-        img.alt = data[i].title;
-        img.setAttribute('onclick','showModal(' + data[i].id +')' )
-
-      };
-      
-};
-
-
-
-function moveLeft(sliderid) {
-    let slider, slidercontent, textIndent;
-
-    slider = document.getElementById(sliderid);
-
-    if (!slider) return false;
-
-    slidercontent = slider.getElementsByClassName('slidercontent')[0]; 
-
-    textIndent = parseInt(slider.style.textIndent || 0);
-    
-    slider.style.textIndent=(textIndent-25)+"%";
-
-    slider.getElementsByClassName('arrow left')[0].style.visibility = "visible";
+const cat1 =  document.getElementById('category-1__title').textContent;
+const cat2 =  document.getElementById('category-2__title').textContent;
+const cat3 =  document.getElementById('category-3__title').textContent;
+filmTop(10, api_url + "?sort_by=-imdb_score", 'top-film',1 ,8);
+filmTop(10, api_url + "?sort_by=-imdb_score&genre_contains=" + cat1, 'category1', 0 , 7);
+filmTop(10, api_url + "?sort_by=-imdb_score&genre_contains=" + cat2, 'category2', 0 , 7);
+filmTop(10, api_url + "?sort_by=-imdb_score&genre_contains=" + cat3, 'category3', 0, 7);
 
 
-    if (slider.style.textIndent >= -50+"%")  {
-       slider.style.textIndent= -50+"%";
-       slider.getElementsByClassName('arrow right')[0].style.visibility = "hidden";    
-    };
+// move carousel to the left
+for (arrow of document.getElementsByClassName("arrow left")) {
+    arrow.onclick = function () {
+        var images = this.parentElement.getElementsByClassName('carousel__img');
+        images[0].parentElement.style.display = "none";
+        images[0].parentElement.parentElement.append(images[0].parentElement);
+        images[3].parentElement.style.display = "inline";
+    }
+}
 
-    return true;
-};
+// move carousel to the right
+for (arrow of document.getElementsByClassName("arrow right")) {
+    arrow.onclick =  function(){
+        var images = this.parentElement.getElementsByClassName('carousel__img');
+        images[3].parentElement.style.display = "none";
+        images[images.length - 1].parentElement.parentElement.prepend(images[images.length - 1].parentElement);
+        images[0].parentElement.style.display = "inline";
+    }
+}
 
-function moveRight(sliderid) {
-    let slider, slidercontent, textIndent;
 
-    slider = document.getElementById(sliderid);
-
-    if (!slider) return false;
-
-    slidercontent = slider.getElementsByClassName('slidercontent')[0];
-
-    textIndent = parseInt(slider.style.textIndent || 0);
-    
-    slider.style.textIndent=(textIndent+25)+"%";
-
-    slider.getElementsByClassName('arrow right')[0].style.visibility = "visible";
-
-    if (slider.style.textIndent >= 0+"%")  {
-        slider.style.textIndent=(0)+"%";
-        slider.getElementsByClassName('arrow left')[0].style.visibility = "hidden";
-    };
-
-    return true;
-};
-
-setTimeout(function(){ document.getElementById('loading').style.display = 'none'; }, 1000);
