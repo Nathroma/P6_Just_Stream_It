@@ -112,7 +112,7 @@ filmTop(10, api_url + "?sort_by=-imdb_score&genre_contains=" + cat3, 'category3'
 
 
 // move carousel to the left
-for (arrow of document.getElementsByClassName("arrow left")) {
+for (arrow of document.getElementsByClassName("arrow right")) {
     arrow.onclick = function () {
         var images = this.parentElement.getElementsByClassName('carousel__img');
         images[0].parentElement.style.display = "none";
@@ -122,7 +122,7 @@ for (arrow of document.getElementsByClassName("arrow left")) {
 }
 
 // move carousel to the right
-for (arrow of document.getElementsByClassName("arrow right")) {
+for (arrow of document.getElementsByClassName("arrow left")) {
     arrow.onclick =  function(){
         var images = this.parentElement.getElementsByClassName('carousel__img');
         images[3].parentElement.style.display = "none";
