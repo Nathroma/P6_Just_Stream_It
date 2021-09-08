@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JustStreamIt</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" media="screen" />
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">JustSreamIt</a></h1>
+
+        <nav>
+          <ul id="menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#sliders">Catégories</a></li>
+          </ul>
+        </nav>
+        
+    </header>
+    <div class="container">
+
+            <div class="best-film">
+                <img id="number-one__img" src="#" alt="">
+                <h1 id="number-one__title">#</h1>
+                <p id="number-one__description" class="best-film__description"></p>
+                <button id="number-one-show">En savoir plus</button>
+            </div>
+            <div class="top-films">
+                <div class="top-films__heading">
+                    <h1>Films les mieux notés</h1>
+                </div>
+
+                <div class="carousel">
+                    <div class="arrow left" onclick="moveRight('sci-fi')">&#8249;</div>
+                    <div id="top-film__carousel" class="carousel-inner">
+                    </div>
+                    <div class="arrow right" onclick="moveLeft('sci-fi')">&#8250;</div>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category__heading">
+                    <h1>Top film of category <span id="category-1__title">Thriller</span></h1>
+                </div>
+                <div class="carousel">
+                    <div class="arrow left" onclick="moveRight('sci-fi')">&#8249;</div>
+                    <div id="category1__carousel" class="carousel-inner">
+                    </div>
+                    <div class="arrow right" onclick="moveLeft('sci-fi')">&#8250;</div>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category__heading">
+                    <h1>Top film of category <span id="category-2__title">Action</span></h1>
+                </div>
+                <div class="carousel">
+                    <div class="arrow left" onclick="moveRight('sci-fi')">&#8249;</div>
+                    <div id="category2__carousel" class="carousel-inner">
+                    </div>
+                    <div class="arrow right" onclick="moveLeft('sci-fi')">&#8250;</div>
+                </div>
+            </div>
+            <div class="category">
+                <div class="category__heading">
+                    <h1>Top film of category <span id="category-3__title">Comedy</span></h1>
+                </div>
+                <div class="carousel">
+                    <div class="arrow left" onclick="moveRight('sci-fi')">&#8249;</div>
+                    <div id="category3__carousel" class="carousel-inner">
+                    </div>
+                    <div class="arrow right" onclick="moveLeft('sci-fi')">&#8250;</div>
+                </div>
+            </div>
+        </div>
+
+            <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="modal-content__close">&times;</span>
+                <div class="modal-content__text">
+                    <div class="modal-content__img">
+                    <img id="modal__img" src="#" alt=""/>
+                    </div>
+                    <div class="modal-content__data">
+                        <h1 id="modal__title">#</h1>
+                        <div><b>Genres:</b> <span id="modal__genres"></span></div>
+                        <div><b>Published:</b> <span id="modal__date_published"></span></div>
+                        <div><b>Rating: </b><span id="modal__rated"></span></div>
+                        <div><b>IMDB score: </b><span id="modal__imdb_score"></span></div>
+                        <div><b>Directors:</b> <span id="modal__directors"></span></div>
+                        <div><b>Actors: </b><span id="modal__actors"></span></div>
+                        <div><b>Duration: </b><span id="modal__duration"></span> mins</div>
+                        <div><b>Countries: </b><span id="modal__countries"></span></div>
+                        <div><b>Box office: </b><span id="modal__reviews_from_critics"></span></div>
+                        <div><b>Description: </b><span id="modal__description"></span></div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+<script src="./js/script.js"></script>
+</body>
+
+</html>
+
