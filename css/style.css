@@ -6,7 +6,7 @@ html
 
 header 
 {
-    position: static;
+    position: relative;
     z-index: 3;
     display: inline-flex;
     width: 100%;
@@ -69,15 +69,13 @@ body
     overflow-x: hidden;
     margin: 0;
     overflow-y: visible;
-
 }
     
 .container
 {
-    position: static;
-    max-width:1200px;
+    align-content: center;    
+    max-width:100%;
     justify-content:center;
-    display:grid;
     padding:30px;
 }
 
@@ -109,12 +107,19 @@ div.movie_item img:hover {
 
 /* Best Movie */
 
-.best-film
+div.best-film
 {
+    align-self: center;
     background: url(../images/background.jpg);
     background-size: cover;
     padding: 6vw 13vw 9vw 13vw;
     height: 34vw;
+    width: 75%;
+}
+
+div.carousel
+{
+    margin-left: 20%;
 }
 
 #number-one__img
@@ -146,7 +151,7 @@ div.movie_item img:hover {
     display:flex;
     justify-content:center;
 }
-    
+
 .category__heading
 {
     display:flex;
